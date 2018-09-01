@@ -1,0 +1,11 @@
+{
+  "name": "tic-tac-toe",
+  "version": "0.0.1",
+  "description": "vanilla JS tic-tac-toe",
+  "author": "forrest-akin",
+  "main": "src/server/server.js",
+  "scripts": {
+    "start": "HOST=0.0.0.0 PORT=1337 node ./src/server/server.js",
+    "test": "node ./__tests__/tests.js"
+  }
+}
