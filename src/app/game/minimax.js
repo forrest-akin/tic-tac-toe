@@ -1,78 +1,64 @@
-import createWins from './wins.js'
-import { getOppositePiece } from '../state/state.js'
+import {
+  createBinaryComporator, get, isGreaterThan, isLessThan, set
+} from '../utils/utils.js'
+import {
+  getEmptyCells, getOppositePiece, getWinningIndexes, isTie, isWinPossible
+} from './utils.js'
 
-export default function minimax (piece, board, isMax = true) {
+// recursively evaluate each empty cell (depth first) and return the best move
+export default function minimax (piece, board) {
   const emptyCells = getEmptyCells(board)
 
-  // tie
-  if (isTie(emptyCells)) {
-  	return { score: 0 }
-  }
-
-  // lose
-  if (isWinningPosition(getOppositePiece(piece), board, emptyCells)) {
-     return { score: -10 }
-  }
-
-  // win
-	if (isWinningPosition(piece, board, emptyCells)) {
-    return { score: 10 }
-	}
-
-  const getMove = getComparator(isMax)
-
-  // recursively evaluate each empty cell and return the best move
-  return emptyCells.reduce((best, indexes) => {
-      const move = {
-        ...getBestMove(piece, board, isMax, indexes),
-        indexes,
-      }
-
-      return getMove(best, move)
-    }, { score: getInitialScore(isMax) })
+  return getTerminalMove(board, emptyCells)
+    || emptyCells.reduce(
+        (best, indexes) => pickBest(best, getMove(piece, board, indexes)),
+        initScore(piece)
+      )
 }
 
-const getBestMove = (piece, board, isMax, [ i, j ]) => {
-  board[i][j] = piece
-  const move = minimax(getOppositePiece(piece), board, !isMax)
-  board[i][j] = null
-  return move
+const getTerminalMove = (board, emptyCells) =>
+  (isWinPossible(emptyCells) && getWinningMove(board))
+    || getTieMove(emptyCells)
+
+const getWinningMove = (board) => {
+  const [ indexes ] = getWinningIndexes(board) || [] 
+  return indexes && getScore(get(board, indexes))
 }
 
-const getComparator = isMax => isMax ? getMaxMove : getMinMove
+const getTieMove = (emptyCells) => isTie(emptyCells) && getScore(TIE)
 
-const getInitialScore = isMax => isMax ? (-Infinity) : Infinity
+const getScore = (key) => ({ score: SCORES[key] })
 
-const createMoveGetter = predicate => createBinaryComporator(predicate, 'score')
+const getMove = (piece, board, indexes) => {
+  set(board, indexes, piece)
+  const move = minimax(getOppositePiece(piece), board)
+  set(board, indexes, null)
+  return Object.assign(move, { indexes, piece })
+}
 
-const createBinaryComporator = (predicate, key) =>
-  (a, b) => predicate(get(a, key), get(b, key)) ? a : b
+const pickBest = (a, b) => getPicker(b.piece)(a, b)
 
-const get = (item, key) => key ? item[key] : item
+const getPicker = (piece) => isMaximizing(piece) ? getMaxMove : getMinMove
 
-const isGreaterThan = (a, b) => a > b
+const isMaximizing = (piece) => piece === X
 
-const isLessThan = (a, b) => a < b
+const createMovePicker = (predicate) =>
+  createBinaryComporator(predicate, ['score'])
 
-const getMaxMove = createMoveGetter(isGreaterThan)
+const getMaxMove = createMovePicker(isGreaterThan)
 
-const getMinMove = createMoveGetter(isLessThan)
+const getMinMove = createMovePicker(isLessThan)
 
-// returns the available spots on the board
-const getEmptyCells = board =>
-  board.reduce((emptyCells, row, i) => {
-    row.forEach((cell, j) => isEmpty(cell) && emptyCells.push([i, j]))
-    return emptyCells
-  }, [])
+const initScore = (piece) => ({
+  score: isMaximizing(piece) ? -Infinity : Infinity
+})
 
-const isEmpty = cell => !cell
+const O = 'O'
+const TIE = 'TIE'
+const X = 'X'
 
-const isTie = emptyCells => emptyCells.length === 0
-
-const isWinningPosition = (piece, board, emptyCells) =>
-  isWinPossible(emptyCells)
-  && wins.some(win => win.every(([i, j]) => board[i][j] === piece))
-
-const isWinPossible = emptyCells => emptyCells.length < 5
-
-const wins = createWins()
+const SCORES = {
+  [O]:   -10,
+  [TIE]: 0,
+  [X]:   10,
+}
