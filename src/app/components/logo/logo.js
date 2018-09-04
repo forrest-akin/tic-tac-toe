@@ -6,15 +6,21 @@ export default function Logo (props) {
 
 const container = ({ children }) => createComponent({
   children,
-  styles,
+  styles: containerStyles,
 })
+
+const containerStyles = {
+  margin: 'auto',
+  width:  '180px',
+}
 
 const logo = ({ src = 'assets/logo.png' } = {}) => createComponent({
   attributes: { src },
+  styles,
   tag: 'img'
 })
 
 const styles = {
-  margin: 'auto',
-  width:  '96px',
+  'max-height': '100%',
+  'max-width':  '100%',
 }
