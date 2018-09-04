@@ -10,7 +10,9 @@ export default function Row ({ cells, rowIdx }) {
 }
 
 const styles = {
-  display: 'flex',
-  height:  '300px',
-  width:   '900px',
+  display:           'flex',
+  height:            '180px',
+  'justify-content': 'space-evenly',
+  margin:            '10px',
+  width:             '580px',
 }
