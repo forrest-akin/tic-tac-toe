@@ -1,11 +1,11 @@
-import Board from './components/board/board.js'
+import Game from './scenes/game/game.js'
 import { mount } from './dom/dom.js'
 import { play } from './game/game.js'
 import { initState } from './state/state.js'
 
 function startApp () {
   const { board } = initState()
-  mount(Board({ rows: board }))
+  mount(Game({ rows: board }))
   play()
 }
 
