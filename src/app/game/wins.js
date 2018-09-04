@@ -1,3 +1,14 @@
+// creates an array of arrays of winning index combinations
+/*
+  [
+    [
+      [ 0, 0 ],
+      [ 0, 1 ],
+      [ 0, 2 ],
+    ],
+    ...
+  ]
+*/
 export default function createWins (size = DEFAULT_SIZE) {
   return createRCWins(size).concat(createDiagWins(size))
 }
