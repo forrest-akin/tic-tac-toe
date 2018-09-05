@@ -1,10 +1,10 @@
-import createComponent from '../../createComponent.js'
-import Cell from './cell/cell.js'
+import createComponent from './createComponent.js'
+import Cell from './cell.js'
 
 export default function Row ({ cells, rowIdx }) {
   return createComponent({
     attributes: { id: `row${rowIdx}` },
-    children: cells.map(($, cellIdx) => Cell({ cellIdx, rowIdx })),
+    children: cells.map((_, cellIdx) => Cell({ cellIdx, rowIdx })),
     styles,
   })
 }

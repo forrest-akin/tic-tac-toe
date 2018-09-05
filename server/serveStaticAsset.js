@@ -1,7 +1,7 @@
 const fs = require('fs')
 
 const {
-  getContentType, getFilePath, handleReadError, staticBase
+  clientBase, getContentType, getFilePath, handleReadError
 } = require('./utils')
 
 module.exports = function serveStaticAsset (request, response) {
@@ -18,4 +18,4 @@ module.exports = function serveStaticAsset (request, response) {
   })
 }
 
-const indexPath = `${staticBase}/index.html`
+const indexPath = `${clientBase}/index.html`

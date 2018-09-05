@@ -1,8 +1,8 @@
-import { insertText } from '../../../../dom/dom.js'
-import { makeMove } from '../../../../game/game.js'
-import { formatCellId } from '../../../../game/utils.js'
-import { getState, isGameOver } from '../../../../state/state.js'
-import createComponent from '../../../createComponent.js'
+import { insertText } from '../dom/dom.js'
+import { makeMove } from '../game/game.js'
+import { formatCellId } from '../game/utils.js'
+import { getState, isGameOver } from '../state/state.js'
+import createComponent from './createComponent.js'
 
 export default function Cell ({ cellIdx, rowIdx }) {
   return createComponent({

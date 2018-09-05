@@ -3,9 +3,9 @@
   "version": "0.0.1",
   "description": "vanilla JS tic-tac-toe",
   "author": "forrest-akin",
-  "main": "src/server/server.js",
+  "main": "server/index.js",
   "scripts": {
-    "start": "HOST=0.0.0.0 PORT=1337 node ./src/server/server.js",
+    "start": "HOST=0.0.0.0 PORT=1337 node ./server/index.js",
     "test": "node ./__tests__/tests.js"
   }
 }

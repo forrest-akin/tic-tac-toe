@@ -1,5 +1,5 @@
-import createComponent from '../createComponent.js'
-import Row from './row/row.js'
+import createComponent from './createComponent.js'
+import Row from './row.js'
 
 export default function Board ({ rows }) {
   return createComponent({

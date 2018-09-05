@@ -1,15 +1,15 @@
 const fs = require('fs')
 const path = require('path')
 
-const staticBase = path.resolve('./src/app')
+const clientBase = path.resolve('./client')
 
 module.exports = {
+  clientBase,
   getContentType,
   getFilePath,
   handleReadError,
   send404,
   send500,
-  staticBase,
 }
 
 function getContentType (filePath) {
@@ -18,7 +18,7 @@ function getContentType (filePath) {
 
 function getFilePath (url) {
   const filePath = path.extname(url) ? url : `${url}/index.js`
-  return `${staticBase}${filePath}`
+  return `${clientBase}${filePath}`
 }
 
 function handleReadError (error, response) {
@@ -64,4 +64,4 @@ const mimeTypes = {
   '.woff': 'application/font-woff',
 }
 
-const serverBase = path.resolve('./src/server')
+const serverBase = path.resolve('./server')

@@ -1,6 +1,6 @@
-import createComponent from '../../components/createComponent.js'
-import Logo from '../../components/logo/logo.js'
-import Board from '../../components/board/board.js'
+import createComponent from '../components/createComponent.js'
+import Logo from '../components/logo.js'
+import Board from '../components/board.js'
 
 export default function Game ({ rows }) {
   return createComponent({

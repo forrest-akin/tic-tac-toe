@@ -1,4 +1,4 @@
-import createComponent from '../createComponent.js'
+import createComponent from './createComponent.js'
 
 export default function Logo (props) {
   return container({ children: [logo(props)] })

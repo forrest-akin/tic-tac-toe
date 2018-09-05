@@ -1,4 +1,4 @@
-import Game from './scenes/game/game.js'
+import Game from './scenes/game.js'
 import { mount } from './dom/dom.js'
 import { play } from './game/game.js'
 import { initState } from './state/state.js'

@@ -1,8 +1,8 @@
-import { removeElement, text } from '../../dom/dom.js'
-import { resetGame } from '../../game/game.js'
-import { clearBoard } from '../../game/utils.js'
-import { getState } from '../../state/state.js'
-import createComponent from '../createComponent.js'
+import { removeElement, text } from '../dom/dom.js'
+import { resetGame } from '../game/game.js'
+import { clearBoard } from '../game/utils.js'
+import { getState } from '../state/state.js'
+import createComponent from './createComponent.js'
 
 export default function ResetButton () {
   return container({ children: [button()] })

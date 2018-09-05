@@ -1,4 +1,4 @@
-import { styles as cellStyles } from '../components/board/row/cell/cell.js'
+import { styles as cellStyles } from '../components/cell.js'
 import { applyStyles, getElementById, removeInnerContent } from '../dom/dom.js'
 import { get } from '../utils/utils.js'
 import createWins from './wins.js'

@@ -1,4 +1,4 @@
-import ResetButton from '../components/resetButton/resetButton.js'
+import ResetButton from '../components/resetButton.js'
 import {
   appendChild, applyStyles, clickElement, getElementById,
 } from '../dom/dom.js'
