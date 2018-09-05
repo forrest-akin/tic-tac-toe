@@ -1,15 +1,17 @@
 import { removeElement } from '../dom/dom.js'
-import { resetGame } from '../game/game.js'
+import { play } from '../game/game.js'
+import { startGame } from '../state/state.js'
 import Button from './button.js'
 
-export default function ResetButton () {
+export default function StartButton () {
   return Button(buttonProps)
 }
 
 const buttonProps = {
-  message: 'PLAY AGAIN',
+  message: 'START GAME',
   onClick: ({ target }) => {
-    resetGame()
+    startGame()
+    play()
     removeElement(target.parentNode)
   }
 }

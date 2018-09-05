@@ -1,11 +1,15 @@
 import { COMPUTER, getOppositePiece, getOppositePlayer } from '../game/utils.js'
 import { nestedUpdate } from '../utils/utils.js'
 
+export function endGame (win) {
+  setState({ isGameOver: true, win })
+}
+
 export function initState () {
   state = {
     currentPlayer: initPlayer(),
     board: initBoard(),
-    isGameOver: false,
+    isGameOver: true,
     isFirstMove: true,
     piece: 'X',
   }
@@ -25,12 +29,12 @@ export function isGameOver () {
   return getState('isGameOver')
 }
 
-export function gameOver (win) {
-  setState({ isGameOver: true, win })
-}
-
 export function getState (key) {
   return key ? state[key] : state
+}
+
+export function startGame () {
+  setState({ isGameOver: false })
 }
 
 export function togglePiece (prevPiece) {

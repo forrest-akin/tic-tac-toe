@@ -3,13 +3,13 @@ import {
   appendChild, applyStyles, clickElement, getElementById,
 } from '../dom/dom.js'
 import {
-  gameOver, getState, initState, isComputerTurn, isFirstMove,
-  togglePiece, togglePlayer, updateBoard,
+  endGame, getState, initState, isComputerTurn, isFirstMove,
+  startGame, togglePiece, togglePlayer, updateBoard,
 } from '../state/state.js'
 import { getRandomItem } from '../utils/utils.js'
 import minimax from './minimax.js'
 import {
-  getCell, getEmptyCells, getWinningIndexes, isTie, isWinPossible
+  clearBoard, getCell, getEmptyCells, getWinningIndexes, isTie, isWinPossible
 } from './utils.js'
 
 export function makeMove (indexes, piece) {
@@ -24,7 +24,9 @@ export function play () {
 }
 
 export function resetGame () {
+  clearBoard(getState('board'))
   initState()
+  startGame()
   play()
 }
 
@@ -33,11 +35,11 @@ const evaluateGameState = (board) => {
   if (!isWinPossible(emptyCells)) return
   
   const win = getWinningIndexes(board)
-  if (win || isTie(emptyCells)) endGame(win)
+  if (win || isTie(emptyCells)) gameOver(win)
 }
 
-const endGame = (win) => {
-  gameOver(win)
+const gameOver = (win) => {
+  endGame(win)
   styleWinners(win)
   showResetButton()
 }
