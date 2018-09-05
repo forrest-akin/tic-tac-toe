@@ -1,10 +1,17 @@
-import { getElementById } from '../dom/dom.js'
+import { styles as cellStyles } from '../components/board/row/cell/cell.js'
+import { applyStyles, getElementById, removeInnerContent } from '../dom/dom.js'
 import { get } from '../utils/utils.js'
 import createWins from './wins.js'
 
 export const HUMAN = 0
 export const COMPUTER = 1
 export const wins = createWins()
+
+export function clearBoard (board) {
+  board.forEach((row, i) =>
+    row.forEach((_, j) => clearCell(i, j))
+  )
+}
 
 export function formatCellId (rowIdx, cellIdx) {
   return `${rowIdx}-${cellIdx}`
@@ -48,5 +55,8 @@ export function isWinPossible (emptyCells) {
 export function isTie (emptyCells) {
   return emptyCells.length === 0
 }
+
+const clearCell = (i, j) =>
+  removeInnerContent(applyStyles(getCell([i, j]), cellStyles))
 
 const isEmpty = cell => !cell
