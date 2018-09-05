@@ -1,5 +1,8 @@
-# tic-tac-toe
-No dependencies implementation of tic-tac-toe
+<div align="center">
+  <img src="client/assets/logo.png" alt="TTT" height="200" />
+</div>
+
+---
 
 # Prerequisites
 Requires [Node](https://nodejs.org/) to run locally
