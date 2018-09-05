@@ -1,10 +1,7 @@
-import {
-  applyStyles, removeElement, removeInnerContent, text
-} from '../../dom/dom.js'
+import { removeElement, text } from '../../dom/dom.js'
 import { resetGame } from '../../game/game.js'
-import { getCell } from '../../game/utils.js'
+import { clearBoard } from '../../game/utils.js'
 import { getState } from '../../state/state.js'
-import { styles as cellStyles } from '../board/row/cell/cell.js'
 import createComponent from '../createComponent.js'
 
 export default function ResetButton () {
@@ -31,7 +28,7 @@ const button = () => createComponent({
 })
 
 const onClick = ({ target }) => {
-  clearBoard()
+  clearBoard(getState('board'))
   resetGame()
   removeElement(target.parentNode)
 }
@@ -50,12 +47,3 @@ const styles = {
   height:          'inherit',
   width:           'inherit',
 }
-
-const clearBoard = () => {
-  getState('board').forEach((row, i) =>
-    row.forEach((_, j) => clearCell(i, j))
-  )
-}
-
-const clearCell = (i, j) =>
-  removeInnerContent(applyStyles(getCell([i, j]), cellStyles))
