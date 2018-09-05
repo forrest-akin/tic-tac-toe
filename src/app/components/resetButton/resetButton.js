@@ -41,9 +41,11 @@ const events = {
 }
 
 const styles = {
-  border:          'none',
-  'border-radius': '20px',
-  'font-size':     '20px',
-  height:          'inherit',
-  width:           'inherit',
+  'background-color': 'ghostwhite',
+  border:             'none',
+  'border-radius':    '20px',
+  cursor:             'pointer',
+  'font-size':        '20px',
+  height:             'inherit',
+  width:              'inherit',
 }
