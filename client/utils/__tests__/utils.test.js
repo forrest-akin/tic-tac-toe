@@ -1,5 +1,5 @@
 import {
-  createBinaryComporator, get, isGreaterThan, isLessThan, nestedUpdate, set, updateItem
+  createBinaryComporator, get, isGreaterThan, isLessThan, nestedUpdate, set, updateItem, getRandomItem
 } from '../utils.js'
 
 describe('Utils module', () => {
@@ -19,8 +19,8 @@ describe('Utils module', () => {
     it('the predicate can compare collections by an arbitrary depth of keys', () => {
       const a = createTestObj(1)
       const b = createTestObj(2)
-      const pickGreater = createBinaryComporator(isGreaterThan, ['a', 'b', 'c'])
-      expect(pickGreater(a, b)).toBe(b)
+      const pickGreater = createBinaryComporator(isLessThan, ['a', 'b', 'c'])
+      expect(pickGreater(a, b)).toBe(a)
     })
   })
 
@@ -35,6 +35,14 @@ describe('Utils module', () => {
 
     it('returns undefined when nothing is found by any of the keys', () => {
       expect(get(createTestObj(1), ['a', 'x', 'c'])).toBe(undefined)
+    })
+  })
+
+  describe('getRandomItem', () => {
+    it('should return any item in an array', () => {
+      const arr = ['I', 'am', 'groot', 'hodor', 'hold', 'the', 'door']
+      const item = getRandomItem(arr)
+      expect(arr.includes(item)).toBe(true)
     })
   })
 
