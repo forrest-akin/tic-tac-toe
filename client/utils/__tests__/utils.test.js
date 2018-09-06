@@ -88,12 +88,12 @@ describe('Utils module', () => {
     const arr = createTestArr()
     const updated = nestedUpdate(arr, [0, 2], 42)
 
-    it('should return an array with the updated nested item', () => {
+    it('should return a new array with the updated nested item', () => {
+      expect(arr === updated).toBe(false)
       expect(get(updated, [0, 2])).toBe(42)  
     })
 
     it('should only modify inner arrays that contain the updated item', () => {
-      expect(arr === updated).toBe(false)
       expect(arr[0] === updated[0]).toBe(false)
       expect(arr[1] === updated[1]).toBe(true)
     })
