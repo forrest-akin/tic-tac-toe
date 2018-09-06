@@ -57,7 +57,7 @@ const showResetButton = () => appendChild(getGame(), ResetButton())
 const getBestMove = (board) =>
   isFirstMove()
   ? getFirstMove()
-  : minimax(getState('piece'), board)
+  : minimax(board, getState('piece'))
 
 const cloneBoard = () => getState('board').map(row => [...row])
 
