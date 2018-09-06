@@ -52,15 +52,12 @@ const makeComputerMove = () => {
 const styleWinners = (win = []) =>
   win.forEach(indexes => applyStyles(getCell(indexes), winStyles))
 
-const winStyles = { 'background-color': 'yellow' }
-
 const showResetButton = () => appendChild(getGame(), ResetButton())
 
-const getBestMove = (board) => {
-  return isFirstMove()
-    ? getFirstMove()
-    : minimax(getState('piece'), board)
-}
+const getBestMove = (board) =>
+  isFirstMove()
+  ? getFirstMove()
+  : minimax(getState('piece'), board)
 
 const cloneBoard = () => getState('board').map(row => [...row])
 
@@ -78,3 +75,5 @@ const firstMoves = [
   [2, 0],
   [2, 2],
 ]
+
+const winStyles = { 'background-color': 'yellow' }
