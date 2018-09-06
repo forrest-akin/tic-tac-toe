@@ -10,7 +10,7 @@ export function appendChild (element, child) {
   return element
 }
 
-export function applyStyles (element, styles = {}) {
+export function applyStyles (element, styles) {
   Object.assign(element.style, styles)
   return element
 }
@@ -31,7 +31,7 @@ export function getRoot () {
   return getElementById('root')
 }
 
-export function insertText (element, string = '') {
+export function insertText (element, string) {
   return appendChild(element, text(string))
 }
 
@@ -51,6 +51,6 @@ export function setAttribute (element, attribute, value) {
   return element
 }
 
-export function text (string = '') {
+export function text (string) {
   return document.createTextNode(string)
 }
