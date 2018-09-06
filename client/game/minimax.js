@@ -2,7 +2,7 @@ import {
   createBinaryComporator, get, isGreaterThan, isLessThan, set
 } from '../utils/utils.js'
 import {
-  getEmptyCells, getOppositePiece, getWinningIndexes, isTie, isWinPossible
+  getEmptyCells, getOppositePiece, getWinningIndexes, isTie, isWinPossible, O, TIE, X
 } from './utils.js'
 
 // recursively evaluate each empty cell (depth first) and return the best move
@@ -52,10 +52,6 @@ const getMinMove = createMovePicker(isLessThan)
 const initScore = (piece) => ({
   score: isMaximizing(piece) ? -Infinity : Infinity
 })
-
-const O = 'O'
-const TIE = 'TIE'
-const X = 'X'
 
 const SCORES = {
   [O]:   -10,

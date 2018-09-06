@@ -3,6 +3,9 @@ import { applyStyles, getElementById, removeInnerContent } from '../dom/dom.js'
 import { get } from '../utils/utils.js'
 import createWins from './wins.js'
 
+export const O = 'O'
+export const TIE = 'TIE'
+export const X = 'X'
 export const HUMAN = 0
 export const COMPUTER = 1
 export const wins = createWins()
