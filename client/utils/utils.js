@@ -23,16 +23,20 @@ export function getRandomItem (arr) {
   return arr[Math.floor(Math.random() * arr.length)]
 }
 
-export function gte (a, b) {
-  return a >= b
-}
-
 export function isEven (int) {
   return int % 2 === 0
 }
 
+export function isOdd (int) {
+  return !isEven(int)
+}
+
 export function gt (a, b) {
   return a > b
+}
+
+export function gte (a, b) {
+  return a >= b
 }
 
 export function lt (a, b) {

@@ -1,5 +1,5 @@
 import {
-  createBinaryComporator, get, gt, gte, lt, lte, nestedUpdate, set, updateItem, getRandomItem, isEven
+  createBinaryComporator, get, gt, gte, lt, lte, nestedUpdate, set, updateItem, getRandomItem, isEven, isOdd
 } from '../utils.js'
 
 describe('Utils module', () => {
@@ -53,6 +53,16 @@ describe('Utils module', () => {
 
     it('should return false for odd numbers', () => {
       expect(isEven(31)).toBe(false)
+    })
+  })
+
+  describe('isOdd', () => {
+    it('should return true for odd numbers', () => {
+      expect(isOdd(31)).toBe(true)
+    })
+
+    it('should return false for even numbers', () => {
+      expect(isOdd(42)).toBe(false)
     })
   })
 
