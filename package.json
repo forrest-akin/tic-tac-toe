@@ -1,11 +1,22 @@
 {
   "name": "tic-tac-toe",
-  "version": "0.0.1",
   "description": "vanilla JS tic-tac-toe",
-  "author": "forrest-akin",
+  "repository": "github:forrest-akin/tic-tac-toe",
+  "version": "0.0.1",
+  "author": {
+    "name": "Forrest Akin",
+    "email": "forrest.akin@gmail.com"
+  },
+  "license": "UNLICENSED",
   "main": "server/index.js",
   "scripts": {
     "start": "HOST=0.0.0.0 PORT=1337 node ./server/index.js",
-    "test": "node ./__tests__/tests.js"
+    "test": "jest"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-jest": "^23.4.2",
+    "babel-preset-env": "^1.7.0",
+    "jest": "^23.5.0"
   }
 }
