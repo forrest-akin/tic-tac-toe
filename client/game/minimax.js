@@ -6,14 +6,19 @@ import {
 } from './utils.js'
 
 // recursively evaluate each empty cell (depth first) and return the best move
-export default function minimax (piece, board) {
+export default function minimax (piece, board, depth = 0) {
   const emptyCells = getEmptyCells(board)
+  const terminalMove = getTerminalMove(board, emptyCells)
 
-  return getTerminalMove(board, emptyCells)
-    || emptyCells.reduce(
-        (best, indexes) => pickBest(best, getMove(piece, board, indexes)),
-        initScore(piece)
-      )
+  if (terminalMove) {
+    terminalMove.depth = depth
+    return terminalMove
+  }
+
+  return emptyCells.reduce(
+    (best, indexes) => pickBest(best, getMove(piece, board, indexes, depth)),
+    initScore(piece)
+  )
 }
 
 const getTerminalMove = (board, emptyCells) =>
@@ -29,14 +34,14 @@ const getTieMove = (emptyCells) => isTie(emptyCells) && getScore(TIE)
 
 const getScore = (key) => ({ score: SCORES[key] })
 
-const getMove = (piece, board, indexes) => {
+const getMove = (piece, board, indexes, depth) => {
   set(board, indexes, piece)
-  const move = minimax(getOppositePiece(piece), board)
+  const move = minimax(getOppositePiece(piece), board, depth + 1)
   set(board, indexes, null)
   return Object.assign(move, { indexes, piece })
 }
 
-const pickBest = (a, b) => getPicker(b.piece)(a, b)
+const pickBest = (a, b) => pickByDepth(a, b) || getPicker(b.piece)(a, b)
 
 const getPicker = (piece) => isMaximizing(piece) ? getMaxMove : getMinMove
 
@@ -44,6 +49,12 @@ const isMaximizing = (piece) => piece === X
 
 const createMovePicker = (predicate) =>
   createBinaryComporator(predicate, ['score'])
+
+const pickByDepth = (a, b) => {
+  if (a.depth === b.depth || a.score !== b.score) return false
+  if (a.depth < b.depth) return a
+  if (b.depth < a.depth) return b
+}
 
 const getMaxMove = createMovePicker(isGreaterThan)
 
