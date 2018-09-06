@@ -1,5 +1,7 @@
-import { clearBoard, formatCellId, getCell, getEmptyCells, getOppositePiece, getOppositePlayer, O, X, COMPUTER, HUMAN, getWinningIndexes, isWinPossible, isTie } from '../utils.js'
-import { endGameState, gameOverBoard, gameOverText, newGameState } from './mocks.js'
+import { endGameState, gameOverBoard, gameOverText, newGameState } from '../__mocks__/mocks.js'
+import {
+  clearBoard, formatCellId, getCell, getEmptyCells, getOppositePiece, getOppositePlayer, O, X, COMPUTER, HUMAN, getWinningIndexes, isWinPossible, isTie
+} from '../utils.js'
 
 describe('Game Utils module', () => {
   describe('clearBoard', () => {
