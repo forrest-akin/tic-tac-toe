@@ -1,70 +1,59 @@
 import {
-  createBinaryComporator, get, gte, lte, set
+  createBinaryComporator, gt, lt, set, isEven
 } from '../utils/utils.js'
 import {
-  getEmptyCells, getOppositePiece, getWinningIndexes, isTie, isWinPossible, O, TIE, X
+  getEmptyCells, getOppositePiece, getWinningIndexes, isTie, isWinPossible
 } from './utils.js'
 
 // recursively evaluate each empty cell (depth first) and return the best move
-export default function minimax (piece, board, depth = 0) {
+export default function minimax (board, piece, depth = 0) {
   const emptyCells = getEmptyCells(board)
-  const terminalMove = getTerminalMove(board, emptyCells)
+  const terminalMove = getTerminalMove(board, emptyCells, depth)
 
-  if (terminalMove) {
-    terminalMove.depth = depth
-    return terminalMove
-  }
+  if (terminalMove) return terminalMove
 
-  return emptyCells.reduce(
-    (best, indexes) => pickBest(best, getMove(piece, board, indexes, depth)),
-    initScore(piece)
+  return emptyCells.map((indexes) => getMove(board, indexes, piece, depth)).reduce(
+    (best, move) => pickBest(depth, best, move),
+    initScore(depth)
   )
 }
 
-const getTerminalMove = (board, emptyCells) =>
-  (isWinPossible(emptyCells) && getWinningMove(board))
+const getTerminalMove = (board, emptyCells, depth) =>
+  (isWinPossible(emptyCells) && getWinningMove(board, depth))
     || getTieMove(emptyCells)
 
-const getWinningMove = (board) => {
-  const [ indexes ] = getWinningIndexes(board) || [] 
-  return indexes && getScore(get(board, indexes))
-}
-
-const getTieMove = (emptyCells) => isTie(emptyCells) && getScore(TIE)
-
-const getScore = (key) => ({ score: SCORES[key] })
-
-const getMove = (piece, board, indexes, depth) => {
+const getMove = (board, indexes, piece, depth) => {
   set(board, indexes, piece)
-  const move = minimax(getOppositePiece(piece), board, depth + 1)
+  const move = minimax(board, getOppositePiece(piece), depth + 1)
   set(board, indexes, null)
-  return Object.assign(move, { indexes, piece })
+  return Object.assign(move, { indexes })
 }
 
-const pickBest = (a, b) =>
-  a.score === b.score
-  ? pickByDepth(a, b)
-  : getPicker(b.piece)(a, b)
+const getWinningMove = (board, depth) => {
+  const [ indexes ] = getWinningIndexes(board) || []
+  return indexes && getWinScore(depth - 1) // subtract 1 from depth since that's where the move comparison occurs
+}
 
-const getPicker = (piece) => isMaximizing(piece) ? getMaxMove : getMinMove
+const getWinScore = (depth) =>
+  getScore(isMaximizing(depth) ? 10 - depth : depth - 10)
 
-const isMaximizing = (piece) => piece === X
+const getTieMove = (emptyCells) => isTie(emptyCells) && getScore(0)
+
+const getScore = (score) => ({ score })
+
+const pickBest = (depth, best, move) => getPicker(depth)(best, move)
+
+const getPicker = (depth) => isMaximizing(depth) ? getMaxMove : getMinMove
 
 const createMovePicker = (predicate) =>
   createBinaryComporator(predicate, ['score'])
 
-const pickByDepth = createBinaryComporator(lte, ['depth'])
+const getMaxMove = createMovePicker(gt)
 
-const getMaxMove = createMovePicker(gte)
+const getMinMove = createMovePicker(lt)
 
-const getMinMove = createMovePicker(lte)
-
-const initScore = (piece) => ({
-  score: isMaximizing(piece) ? -Infinity : Infinity
+const initScore = (depth) => ({
+  score: isMaximizing(depth) ? -Infinity : Infinity
 })
 
-const SCORES = {
-  [O]:   -10,
-  [TIE]: 0,
-  [X]:   10,
-}
+const isMaximizing = (depth) => isEven(depth)
