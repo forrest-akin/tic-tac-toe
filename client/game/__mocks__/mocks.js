@@ -18,18 +18,6 @@ export const newGameState = () => [
   [null, null, null],
 ]
 
-export const xLosesNext = () => [
-  [null, X, null],
-  [O, O, X],
-  [O, X, null],
-]
-
-export const xWinsNext = () => [
-  [null, null, null],
-  [O, X, null],
-  [X, O, null],
-]
-
 export const oLosesNext = () => [
   [null, null, null],
   [O, X, X],
@@ -42,3 +30,14 @@ export const oWinsNext = () => [
   [X, X, null],
 ]
 
+export const xLosesNext = () => [
+  [X, null, null],
+  [null, O, X],
+  [O, X, O],
+]
+
+export const xWinsNext = () => [
+  [null, null, null],
+  [O, X, null],
+  [X, O, null],
+]
