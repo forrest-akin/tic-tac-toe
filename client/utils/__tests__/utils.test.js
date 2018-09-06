@@ -1,5 +1,5 @@
 import {
-  createBinaryComporator, get, isGreaterThan, isLessThan, nestedUpdate, set, updateItem, getRandomItem
+  createBinaryComporator, get, gt, gte, lt, lte, nestedUpdate, set, updateItem, getRandomItem, isEven
 } from '../utils.js'
 
 describe('Utils module', () => {
@@ -12,14 +12,14 @@ describe('Utils module', () => {
     })
 
     it('the function it creates should return the correct item based on the predicate', () => {
-      const pickGreater = createBinaryComporator(isGreaterThan)
+      const pickGreater = createBinaryComporator(gt)
       expect(pickGreater(1, 2)).toBe(2)
     })
 
     it('the predicate can compare collections by an arbitrary depth of keys', () => {
       const a = createTestObj(1)
       const b = createTestObj(2)
-      const pickGreater = createBinaryComporator(isLessThan, ['a', 'b', 'c'])
+      const pickGreater = createBinaryComporator(lt, ['a', 'b', 'c'])
       expect(pickGreater(a, b)).toBe(a)
     })
   })
@@ -46,41 +46,69 @@ describe('Utils module', () => {
     })
   })
 
-  describe('set', () => {
-    it('updates the collection with the given item', () => {
-      const a = createTestObj(true)
-      set(a, ['a', 'b', 'c'], false)
-      expect(get(a, ['a', 'b', 'c'])).toBe(false)
+  describe('isEven', () => {
+    it('should return true for even numbers', () => {
+      expect(isEven(42)).toBe(true)
     })
 
-    it('returns the given value if it was successful', () => {
-      const a = createTestObj(true)
-      expect(set(a, ['a', 'b', 'c'], false)).toBe(false)
-    })
-
-    it('returns undefined if it failed', () => {
-      const a = createTestObj(true)
-      expect(set(a, ['a', 'b', 'x', 'c'], false)).toBe(undefined)
+    it('should return false for odd numbers', () => {
+      expect(isEven(31)).toBe(false)
     })
   })
 
-  describe('isGreaterThan', () => {
+  describe('gt', () => {
     it('returns true if the first arg is greater than the second', () => {
-      expect(isGreaterThan(2, 1)).toBe(true)
+      expect(gt(2, 1)).toBe(true)
     })
 
-    it('returns false if the first arg is not greater than the second', () => {
-      expect(isGreaterThan(1, 1)).toBe(false)
+    it('returns false if the first arg is equal to the second', () => {
+      expect(gt(1, 1)).toBe(false)
+    })
+
+    it('returns false if the first arg is less than the second', () => {
+      expect(gt(0, 1)).toBe(false)
     })
   })
 
-  describe('isLessThan', () => {
-    it('returns true if the first arg is less than the second', () => {
-      expect(isLessThan(1, 2)).toBe(true)
+  describe('gte', () => {
+    it('returns true if the first arg is greater than the second', () => {
+      expect(gte(2, 1)).toBe(true)
     })
 
-    it('returns false if the first arg is not less than the second', () => {
-      expect(isLessThan(1, 1)).toBe(false)
+    it('returns true if the first arg is equal to the second', () => {
+      expect(gte(1, 1)).toBe(true)
+    })
+
+    it('returns false if the first arg is less than the second', () => {
+      expect(gte(0, 1)).toBe(false)
+    })
+  })
+
+  describe('lt', () => {
+    it('returns true if the first arg is less than the second', () => {
+      expect(lt(1, 2)).toBe(true)
+    })
+
+    it('returns false if the first arg is equal to the second', () => {
+      expect(lt(1, 1)).toBe(false)
+    })
+
+    it('returns false if the first arg is greater than the second', () => {
+      expect(lt(2, 1)).toBe(false)
+    })
+  })
+
+  describe('lte', () => {
+    it('returns true if the first arg is less than the second', () => {
+      expect(lte(1, 2)).toBe(true)
+    })
+
+    it('returns true if the first arg is equal to the second', () => {
+      expect(lte(1, 1)).toBe(true)
+    })
+
+    it('returns false if the first arg is greater than the second', () => {
+      expect(lte(2, 1)).toBe(false)
     })
   })
 
@@ -96,6 +124,24 @@ describe('Utils module', () => {
     it('should only modify inner arrays that contain the updated item', () => {
       expect(arr[0] === updated[0]).toBe(false)
       expect(arr[1] === updated[1]).toBe(true)
+    })
+  })
+
+  describe('set', () => {
+    it('updates the collection with the given item', () => {
+      const a = createTestObj(true)
+      set(a, ['a', 'b', 'c'], false)
+      expect(get(a, ['a', 'b', 'c'])).toBe(false)
+    })
+
+    it('returns the given value if it was successful', () => {
+      const a = createTestObj(true)
+      expect(set(a, ['a', 'b', 'c'], false)).toBe(false)
+    })
+
+    it('returns undefined if it failed', () => {
+      const a = createTestObj(true)
+      expect(set(a, ['a', 'b', 'x', 'c'], false)).toBe(undefined)
     })
   })
 
