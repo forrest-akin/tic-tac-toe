@@ -11,7 +11,7 @@ export function get (collection, [key, ...keys] = []) {
 }
 
 // set an arbitrarily nested item's value
-export function set (collection, keys = [], value) {
+export function set (collection, keys, value) {
   const keysCopy = keys.slice()
   const key = keysCopy.pop()
   const container = get(collection, keysCopy)
