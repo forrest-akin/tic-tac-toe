@@ -15,7 +15,7 @@ export function set (collection, keys = [], value) {
   const keysCopy = keys.slice()
   const key = keysCopy.pop()
   const container = get(collection, keysCopy)
-  if (container) container[key] = value
+  if (container) return container[key] = value
 }
 
 // returns a random item in an array
