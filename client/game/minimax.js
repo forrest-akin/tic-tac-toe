@@ -1,5 +1,5 @@
 import {
-  createBinaryComporator, get, isGreaterThan, isLessThan, set
+  createBinaryComporator, get, gte, lte, set
 } from '../utils/utils.js'
 import {
   getEmptyCells, getOppositePiece, getWinningIndexes, isTie, isWinPossible, O, TIE, X
@@ -41,7 +41,10 @@ const getMove = (piece, board, indexes, depth) => {
   return Object.assign(move, { indexes, piece })
 }
 
-const pickBest = (a, b) => pickByDepth(a, b) || getPicker(b.piece)(a, b)
+const pickBest = (a, b) =>
+  a.score === b.score
+  ? pickByDepth(a, b)
+  : getPicker(b.piece)(a, b)
 
 const getPicker = (piece) => isMaximizing(piece) ? getMaxMove : getMinMove
 
@@ -50,15 +53,11 @@ const isMaximizing = (piece) => piece === X
 const createMovePicker = (predicate) =>
   createBinaryComporator(predicate, ['score'])
 
-const pickByDepth = (a, b) => {
-  if (a.depth === b.depth || a.score !== b.score) return false
-  if (a.depth < b.depth) return a
-  if (b.depth < a.depth) return b
-}
+const pickByDepth = createBinaryComporator(lte, ['depth'])
 
-const getMaxMove = createMovePicker(isGreaterThan)
+const getMaxMove = createMovePicker(gte)
 
-const getMinMove = createMovePicker(isLessThan)
+const getMinMove = createMovePicker(lte)
 
 const initScore = (piece) => ({
   score: isMaximizing(piece) ? -Infinity : Infinity
