@@ -27,8 +27,8 @@ export function getElementById (id) {
   return document.getElementById(id)
 }
 
-export function getRoot (id = 'root') {
-  return getElementById(id)
+export function getRoot () {
+  return getElementById('root')
 }
 
 export function insertText (element, string = '') {
