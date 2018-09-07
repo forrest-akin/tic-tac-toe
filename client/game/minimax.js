@@ -20,7 +20,7 @@ export default function minimax (board, piece, depth = 0) {
 
 const getTerminalMove = (board, emptyCells, depth) =>
   (isWinPossible(emptyCells) && getWinningMove(board, depth))
-    || getTieMove(emptyCells)
+  || getTieMove(emptyCells)
 
 const getMove = (board, indexes, piece, depth) => {
   set(board, indexes, piece)
