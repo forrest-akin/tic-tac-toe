@@ -12,8 +12,12 @@ export default function minimax (board, piece, depth = 0) {
 
   if (terminalMove) return terminalMove
 
-  return emptyCells.map((indexes) => getMove(board, indexes, piece, depth)).reduce(
-    (best, move) => pickBest(depth, best, move),
+  return emptyCells.reduce(
+    (best, indexes) => pickBest(
+      depth,
+      best,
+      getMove(board, indexes, piece, depth)
+    ),
     initScore(depth)
   )
 }
