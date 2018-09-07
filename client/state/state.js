@@ -8,7 +8,7 @@ export function endGame (win) {
 export function initState () {
   state = {
     board: initBoard(),
-    currentPlayer: initPlayer(),
+    player: initPlayer(),
     isFirstMove: true,
     isGameOver: true,
     piece: 'X',
@@ -18,7 +18,7 @@ export function initState () {
 }
 
 export function isComputerTurn () {
-  return getState('currentPlayer') === COMPUTER
+  return getState('player') === COMPUTER
 }
 
 export function isFirstMove () {
@@ -44,9 +44,9 @@ export function togglePiece () {
 }
 
 export function togglePlayer () {
-  const currentPlayer = getOppositePlayer(getState('currentPlayer'))
-  setState({ currentPlayer })
-  return currentPlayer
+  const player = getOppositePlayer(getState('player'))
+  setState({ player })
+  return player
 }
 
 export function updateBoard (indexes, piece) {

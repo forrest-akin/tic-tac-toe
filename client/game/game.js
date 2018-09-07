@@ -3,7 +3,7 @@ import {
   appendChild, applyStyles, clickElement, getElementById,
 } from '../dom/dom.js'
 import {
-  endGame, getState, initState, isComputerTurn, isFirstMove,
+  endGame, getState, initState, isComputerTurn, isFirstMove, isGameOver,
   startGame, togglePiece, togglePlayer, updateBoard,
 } from '../state/state.js'
 import { getRandomItem } from '../utils/utils.js'
@@ -14,13 +14,13 @@ import {
 
 export function makeMove (indexes, piece) {
   togglePiece(piece)
-  togglePlayer(getState('currentPlayer'))
+  togglePlayer(getState('player'))
   evaluateGameState(updateBoard(indexes, piece))
-  play()
+  if (!isGameOver()) play()
 }
 
 export function play () {
-  isComputerTurn() && makeComputerMove()
+  if (isComputerTurn()) makeComputerMove()
 }
 
 export function resetGame () {

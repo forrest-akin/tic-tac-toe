@@ -5,7 +5,7 @@ import {
 } from '../state.js'
 
 describe('State module', () => {
-  const stateKeys = ['board', 'currentPlayer', 'isFirstMove', 'isGameOver', 'piece']
+  const stateKeys = ['board', 'player', 'isFirstMove', 'isGameOver', 'piece']
   const initialState = {
     board: [[null, null, null], [null, null, null], [null, null, null]],
     isFirstMove: true,
@@ -30,15 +30,15 @@ describe('State module', () => {
 
   describe('initState', () => {
     it('should initialize state',  () => {
-      const { currentPlayer, ...state } = getState()
+      const { player, ...state } = getState()
       expect(state).toEqual(initialState)
-      expect([0, 1]).toContain(currentPlayer)
+      expect([0, 1]).toContain(player)
     })
   })
 
   describe('isComputerTurn', () => {
-    it('should return true if the currentPlayer is the computer', () => {
-      if (getState('currentPlayer') !== COMPUTER) {
+    it('should return true if the player is the computer', () => {
+      if (getState('player') !== COMPUTER) {
         togglePlayer()
       }
 
@@ -98,8 +98,8 @@ describe('State module', () => {
   })
 
   describe('togglePlayer', () => {
-    it('should toggle the state of currentPlayer', () => {
-      const expected = getState('currentPlayer') === COMPUTER ? HUMAN : COMPUTER
+    it('should toggle the state of player', () => {
+      const expected = getState('player') === COMPUTER ? HUMAN : COMPUTER
       expect(togglePlayer()).toBe(expected)
     })
   })
