@@ -23,7 +23,8 @@ export function getOppositePiece (piece) {
 }
 
 export function getOppositePlayer (player) {
-  return player === COMPUTER ? HUMAN : COMPUTER
+  const { current, p1, p2 } = player
+  return current === p1 ? p2 : p1
 }
 
 export function getWinningIndexes (board) {

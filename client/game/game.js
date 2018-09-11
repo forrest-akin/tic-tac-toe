@@ -2,8 +2,8 @@ import { clickCell } from '../components/cell.js'
 import { styleWinners } from '../components/board.js'
 import { showResetButton } from '../scenes/game.js'
 import {
-  endGame, getState, initState, isComputerTurn, isGameOver,
-  startGame, togglePiece, togglePlayer, updateBoard,
+  endGame, getCurrentPlayer, getState, initState, isGameOver,
+  startGame, togglePlayer, updateBoard,
 } from '../state/state.js'
 import minimax from './minimax.js'
 import {
@@ -11,14 +11,13 @@ import {
 } from './utils.js'
 
 export function makeMove (indexes, piece) {
-  togglePiece(piece)
-  togglePlayer(getState('player'))
+  const { current } = togglePlayer()
   evaluateGameState(updateBoard(indexes, piece))
-  if (!isGameOver()) play()
+  if (!isGameOver()) play(current)
 }
 
-export function play () {
-  if (isComputerTurn()) makeComputerMove()
+export function play (player = getCurrentPlayer()) {
+  if (player.isComputer) makeComputerMove(player.piece)
 }
 
 export function resetGame () {
@@ -41,8 +40,8 @@ const gameOver = (win) => {
   showResetButton()
 }
 
-const makeComputerMove = () => {
-  const { indexes } = minimax(cloneBoard(), getState('piece'))
+const makeComputerMove = (piece) => {
+  const { indexes } = minimax(cloneBoard(), piece)
   if (indexes) clickCell(indexes)
 }
 

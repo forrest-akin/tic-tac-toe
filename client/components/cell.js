@@ -2,7 +2,7 @@ import {
   applyStyles, clickElement, getElementById, insertText, removeInnerContent
 } from '../dom/dom.js'
 import { makeMove } from '../game/game.js'
-import { getState, isGameOver } from '../state/state.js'
+import { getCurrentPlayer, isGameOver } from '../state/state.js'
 import createComponent from './createComponent.js'
 
 export default function Cell ({ cellIdx, rowIdx }) {
@@ -27,7 +27,7 @@ export function getCell (indexes) {
 
 const onClick = ({ target: cell }) => {
   if (isGameOver() || !isCellEmpty(cell)) return
-  const piece = getState('piece')
+  const { piece } = getCurrentPlayer()
   insertText(cell, piece)
   makeMove(getBoardIndexes(cell), piece)
 }

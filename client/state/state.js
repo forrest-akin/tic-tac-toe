@@ -1,5 +1,9 @@
-import { COMPUTER, getOppositePiece, getOppositePlayer } from '../game/utils.js'
+import { COMPUTER, getOppositePlayer, O, X } from '../game/utils.js'
 import { nestedUpdate } from '../utils/utils.js'
+
+export function createPlayer (isComputer, piece) {
+  return ({ isComputer, piece })
+}
 
 export function endGame (win) {
   return setState({ isGameOver: true, win })
@@ -10,18 +14,18 @@ export function initState () {
     board: initBoard(),
     player: initPlayer(),
     isGameOver: true,
-    piece: 'X',
   }
 
   return state
 }
 
-export function isComputerTurn () {
-  return getState('player') === COMPUTER
-}
-
 export function isGameOver () {
   return getState('isGameOver')
+}
+
+export function getCurrentPlayer () {
+  const { current } = getState('player')
+  return current
 }
 
 export function getState (key) {
@@ -32,14 +36,9 @@ export function startGame () {
   return setState({ isGameOver: false })
 }
 
-export function togglePiece () {
-  const piece = getOppositePiece(getState('piece'))
-  setState({ piece })
-  return piece
-}
-
 export function togglePlayer () {
-  const player = getOppositePlayer(getState('player'))
+  const player = { ...getState('player') }
+  player.current = getOppositePlayer(player)
   setState({ player })
   return player
 }
@@ -52,7 +51,13 @@ export function updateBoard (indexes, piece) {
 
 const setState = (change) => Object.assign(state, change)
 
-const initPlayer = () => Math.round(Math.random())
+const initPlayer = () => {
+  const isComputer = Math.round(Math.random()) === COMPUTER
+  const p1 = createPlayer(isComputer, X)
+  const p2 = createPlayer(!isComputer, O)
+  
+  return { current: p1, p1, p2 }
+}
 
 const initBoard = () => initRow().map(initRow)
 
