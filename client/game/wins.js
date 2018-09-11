@@ -44,9 +44,8 @@ const createRowWins = (size) => {
   return wins
 }
 
-const createColumnWins = (
-  rowWins = createRowWins(DEFAULT_SIZE)
-) => rowWins.map(win => win.map(columnTransform))
+const createColumnWins = (rowWins) =>
+  rowWins.map(win => win.map(columnTransform))
 
 const createLeftDiagWin = (size) => {
   const win = []
@@ -58,9 +57,8 @@ const createLeftDiagWin = (size) => {
   return win
 }
 
-const createRightDiagWin = (
-  win = createLeftDiagWin(DEFAULT_SIZE)
-) => win.map((indexes) => diagTransform(indexes, win.length))
+const createRightDiagWin = (leftDiagWin) =>
+  leftDiagWin.map((indexes) => diagTransform(indexes, leftDiagWin.length))
 
 const columnTransform = ([i, j]) => ([j, i])
 
