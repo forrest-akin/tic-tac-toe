@@ -1,4 +1,6 @@
-import { addEventListener, appendChild, applyStyles, clickElement, createElement, getElementById, getRoot, insertText, mount, removeElement, removeInnerContent, setAttribute, text } from '../dom.js'
+import {
+  addEventListener, appendChild, applyStyles, clickElement, createElement, getElementById, getRoot, insertText, mount, removeElement, removeInnerContent, setAttribute, text
+} from '../dom.js'
 
 describe('DOM module', () => {
   let element

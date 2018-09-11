@@ -1,14 +1,13 @@
 import { COMPUTER, HUMAN, O, X } from '../../game/utils.js'
 import { get } from '../../utils/utils.js'
 import {
-  endGame, initState, isComputerTurn, isFirstMove, isGameOver, getState, togglePlayer, updateBoard, startGame, togglePiece
+  endGame, initState, isComputerTurn, isGameOver, getState, togglePlayer, updateBoard, startGame, togglePiece
 } from '../state.js'
 
 describe('State module', () => {
-  const stateKeys = ['board', 'player', 'isFirstMove', 'isGameOver', 'piece']
+  const stateKeys = ['board', 'player', 'isGameOver', 'piece']
   const initialState = {
     board: [[null, null, null], [null, null, null], [null, null, null]],
-    isFirstMove: true,
     isGameOver: true,
     piece: 'X'
   }
@@ -43,17 +42,6 @@ describe('State module', () => {
       }
 
       expect(isComputerTurn()).toBe(true)
-    })
-  })
-
-  describe('isFirstMove', () => {
-    it('should return true when state is initialized', () => {
-      expect(isFirstMove()).toBe(true)
-    })
-
-    it('should return false after the board has been updated', () => {
-      updateBoard([0, 0], X)
-      expect(isFirstMove()).toBe(false)
     })
   })
 

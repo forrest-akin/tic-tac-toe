@@ -1,4 +1,4 @@
-import { oLosesNext, oWinsNext, xLosesNext, xWinsNext } from '../__mocks__/mocks.js'
+import { oLosesNext, oWinsNext, xLosesNext, xWinsNext } from '../../__mocks__/mocks.js'
 import minimax from '../minimax.js'
 import { X, O } from '../utils.js'
 

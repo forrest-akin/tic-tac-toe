@@ -1,34 +1,9 @@
-import { endGameState, gameOverBoard, gameOverText, newGameState } from '../__mocks__/mocks.js'
+import { endGameState, newGameState } from '../../__mocks__/mocks.js'
 import {
-  clearBoard, formatCellId, getCell, getEmptyCells, getOppositePiece, getOppositePlayer, O, X, COMPUTER, HUMAN, getWinningIndexes, isWinPossible, isTie
+  getEmptyCells, getOppositePiece, getOppositePlayer, O, X, COMPUTER, HUMAN, getWinningIndexes, isWinPossible, isTie
 } from '../utils.js'
 
 describe('Game Utils module', () => {
-  describe('clearBoard', () => {
-    document.body.innerHTML = gameOverBoard()
-
-    it('should clear text from all cells', () => {
-      expect(document.body.textContent).toBe(gameOverText())
-      clearBoard(endGameState())
-      expect(document.body.textContent).toBe('')
-    })
-  })
-
-  describe('formatCellId', () => {
-    it('should join the given indexes by a hyphen', () => {
-      expect(formatCellId(1, 2)).toBe('1-2')
-    })
-  })
-
-  describe('getCell', () => {
-    document.body.innerHTML = gameOverBoard()
-
-    it('should return the element corresponding to the given indexes', () => {
-      const element = getCell([0, 0])
-      expect(element.id).toBe('0-0')
-    })
-  })
-
   describe('getEmptyCells', () => {
     it('should return an array of indexes for empty cells', () => {
       const emptyCells = getEmptyCells(endGameState())

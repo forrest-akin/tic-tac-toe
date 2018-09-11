@@ -1,6 +1,6 @@
+import { newGame, oWinsNext, xWinsNext } from '../../__mocks__/mocks.js'
 import { getState, initState, startGame } from '../../state/state.js'
 import { get } from '../../utils/utils.js'
-import { newGame, oWinsNext, xWinsNext } from '../__mocks__/mocks.js'
 import { makeMove } from '../game.js'
 import { O, X, COMPUTER } from '../utils.js'
 
