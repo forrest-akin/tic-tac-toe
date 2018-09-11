@@ -9,7 +9,6 @@ export function initState () {
   state = {
     board: initBoard(),
     player: initPlayer(),
-    isFirstMove: true,
     isGameOver: true,
     piece: 'X',
   }
@@ -19,10 +18,6 @@ export function initState () {
 
 export function isComputerTurn () {
   return getState('player') === COMPUTER
-}
-
-export function isFirstMove () {
-  return getState('isFirstMove')
 }
 
 export function isGameOver () {
@@ -51,7 +46,7 @@ export function togglePlayer () {
 
 export function updateBoard (indexes, piece) {
   const board = nestedUpdate(getState('board'), indexes, piece)
-  setState({ board, isFirstMove: false })
+  setState({ board })
   return board
 }
 

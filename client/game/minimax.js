@@ -1,13 +1,16 @@
 import {
-  createBinaryComporator, gt, lt, set, isEven
+  createBinaryComporator, getRandomItem, gt, lt, set, isEven
 } from '../utils/utils.js'
 import {
-  getEmptyCells, getOppositePiece, getWinningIndexes, isTie, isWinPossible
+  getEmptyCells, getOppositePiece, getWinningIndexes, isFirstMove, isTie, isWinPossible
 } from './utils.js'
 
 // recursively evaluate each empty cell (depth first) and return the best move
 export default function minimax (board, piece, depth = 0) {
   const emptyCells = getEmptyCells(board)
+
+  if (isFirstMove(emptyCells)) return getFirstMove()
+
   const terminalMove = getTerminalMove(board, emptyCells, depth)
 
   if (terminalMove) return terminalMove
@@ -61,3 +64,14 @@ const initScore = (depth) => ({
 })
 
 const isMaximizing = (depth) => isEven(depth)
+
+const getFirstMove = () => ({ indexes: getRandomItem(firstMoves) })
+
+// best first move is any corner
+// https://puzzling.stackexchange.com/questions/30/what-is-the-optimal-first-move-in-tic-tac-toe
+const firstMoves = [
+  [0, 0],
+  [0, 2],
+  [2, 0],
+  [2, 2],
+]
