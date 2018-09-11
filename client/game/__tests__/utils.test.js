@@ -1,4 +1,5 @@
 import { endGameState, newGameState } from '../../__mocks__/mocks.js'
+import { createPlayer } from '../../state/state.js'
 import {
   getEmptyCells, getOppositePiece, getOppositePlayer, O, X, COMPUTER, HUMAN, getWinningIndexes, isWinPossible, isTie
 } from '../utils.js'
@@ -24,12 +25,23 @@ describe('Game Utils module', () => {
   })
 
   describe('getOppositePlayer', () => {
-    it('should return HUMAN given COMPUTER', () => {
-      expect(getOppositePlayer(COMPUTER)).toBe(HUMAN)
+    let player
+    
+    beforeEach(() => {
+      player = {
+        p1: createPlayer(true, X),
+        p2: createPlayer(false, O),
+      }
     })
 
-    it('should return COMPUTER given HUMAN', () => {
-      expect(getOppositePlayer(HUMAN)).toBe(COMPUTER)
+    it('should return P2 if current is P1', () => {
+      player.current = player.p1
+      expect(getOppositePlayer(player)).toBe(player.p2)
+    })
+
+    it('should return P1 if current is P2', () => {
+      player.current = player.p2
+      expect(getOppositePlayer(player)).toBe(player.p1)
     })
   })
 

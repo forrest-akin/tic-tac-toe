@@ -2,27 +2,22 @@ import { newGame, oWinsNext, xWinsNext } from '../../__mocks__/mocks.js'
 import { getState, initState, startGame } from '../../state/state.js'
 import { get } from '../../utils/utils.js'
 import { makeMove } from '../game.js'
-import { O, X, COMPUTER } from '../utils.js'
+import { O, X } from '../utils.js'
 
 describe('Game module', () => {
   beforeEach(() => {
     initState()
     startGame()
-    getState().player = COMPUTER
+    getState('player').current.isComputer = true
     document.body.innerHTML = newGame()
   })
 
   describe('makeMove', () => {
-    it('should toggle the current piece', () => {
-      const piece = getState('piece')
-      makeMove([0, 0], piece)
-      expect(getState('piece')).not.toBe(piece)
-    })
-
     it('should toggle the current player', () => {
-      const player = getState('player')
+      const { current: expected } = getState('player')
       makeMove([0, 0], X)
-      expect(getState('player')).not.toBe(player)
+      const { current } = getState('player')
+      expect(current).not.toBe(expected)
     })
 
     it('should update board state with the given indexes and piece', () => {

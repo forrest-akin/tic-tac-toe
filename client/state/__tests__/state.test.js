@@ -1,15 +1,14 @@
 import { COMPUTER, HUMAN, O, X } from '../../game/utils.js'
 import { get } from '../../utils/utils.js'
 import {
-  endGame, initState, isComputerTurn, isGameOver, getState, togglePlayer, updateBoard, startGame, togglePiece
+  endGame, initState, isGameOver, getState, togglePlayer, updateBoard, startGame
 } from '../state.js'
 
 describe('State module', () => {
-  const stateKeys = ['board', 'player', 'isGameOver', 'piece']
+  const stateKeys = ['board', 'player', 'isGameOver']
   const initialState = {
     board: [[null, null, null], [null, null, null], [null, null, null]],
     isGameOver: true,
-    piece: 'X'
   }
 
   beforeEach(initState)
@@ -31,17 +30,7 @@ describe('State module', () => {
     it('should initialize state',  () => {
       const { player, ...state } = getState()
       expect(state).toEqual(initialState)
-      expect([0, 1]).toContain(player)
-    })
-  })
-
-  describe('isComputerTurn', () => {
-    it('should return true if the player is the computer', () => {
-      if (getState('player') !== COMPUTER) {
-        togglePlayer()
-      }
-
-      expect(isComputerTurn()).toBe(true)
+      expect(Object.keys(player)).toEqual(['current', 'p1', 'p2'])
     })
   })
 
@@ -67,7 +56,7 @@ describe('State module', () => {
     })
 
     it('should return the value of the given key', () => {
-      expect(getState('piece')).toBe(X)
+      expect(getState('board')).toEqual(initialState.board)
     })
   })
 
@@ -78,17 +67,11 @@ describe('State module', () => {
     })
   })
 
-  describe('togglePiece', () => {
-    it('should toggle the state of piece', () => {
-      const expected = getState('piece') === X ? O : X
-      expect(togglePiece()).toBe(expected)
-    })
-  })
-
   describe('togglePlayer', () => {
     it('should toggle the state of player', () => {
-      const expected = getState('player') === COMPUTER ? HUMAN : COMPUTER
-      expect(togglePlayer()).toBe(expected)
+      const { p2: expected } = getState('player')
+      const { current } = togglePlayer()
+      expect(current).toBe(expected)
     })
   })
 
