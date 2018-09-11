@@ -1,5 +1,3 @@
-import { styles as cellStyles } from '../components/cell.js'
-import { applyStyles, getElementById, removeInnerContent } from '../dom/dom.js'
 import { get } from '../utils/utils.js'
 import createWins from './wins.js'
 
@@ -9,20 +7,6 @@ export const X = 'X'
 export const HUMAN = 0
 export const COMPUTER = 1
 export const wins = createWins()
-
-export function clearBoard (board) {
-  board.forEach((row, i) =>
-    row.forEach((_, j) => clearCell(i, j))
-  )
-}
-
-export function formatCellId (rowIdx, cellIdx) {
-  return `${rowIdx}-${cellIdx}`
-}
-
-export function getCell (indexes) {
-  return getElementById(formatCellId(...indexes))
-}
 
 export function getEmptyCells (board) {
   return board.reduce((emptyCells, row, i) =>
@@ -51,15 +35,16 @@ export function getWinningIndexes (board) {
   })
 }
 
-export function isWinPossible (emptyCells) {
-  return emptyCells.length < 5
+export function isFirstMove (emptyCells) {
+  return emptyCells.length === 9
 }
 
 export function isTie (emptyCells) {
   return emptyCells.length === 0
 }
 
-const clearCell = (i, j) =>
-  removeInnerContent(applyStyles(getCell([i, j]), cellStyles))
+export function isWinPossible (emptyCells) {
+  return emptyCells.length < 5
+}
 
 const isEmpty = cell => !cell
