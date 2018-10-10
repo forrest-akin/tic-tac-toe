@@ -54,4 +54,7 @@ export function nestedUpdate (arr, [idx, ...indexes], item) {
 
 export function updateItem (arr, idx, item) {
   return arr.slice(0, idx).concat([item], arr.slice(idx + 1))
+  // const copy = [...arr]
+  // copy.splice(idx, 1, item)
+  // return copy
 }
