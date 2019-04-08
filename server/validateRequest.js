@@ -7,5 +7,5 @@ module.exports = function validateRequest (request, response, next) {
     return send404(response)
   }
 
-  next()
+  return next(request, response)
 }
